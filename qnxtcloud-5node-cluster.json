@@ -15,6 +15,24 @@
         "description": "Name of your cluster - Between 3 and 23 characters. Letters and numbers only"
       }
     },
+    "virtualNetworkName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of existing virtual network to use. Letters and numbers only"
+      }
+    },
+    "existingVnetResourceGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the resourceGroup for the existing virtual network to deploy the scale set into."
+      }
+    },
+    "existingSubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the existing subnet to deploy the scale set into."
+      }
+    },
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -43,7 +61,7 @@
     },
     "vmImageSku": {
       "type": "string",
-      "defaultValue": "2016-Datacenter",
+      "defaultValue": "2016-Datacenter-with-Containers",
       "metadata": {
         "description": "VM image SKU"
       }
@@ -64,7 +82,21 @@
     },
     "loadBalancedAppPort2": {
       "type": "int",
-      "defaultValue": 8081,
+      "defaultValue": 443,
+      "metadata": {
+        "description": "Input endpoint2 for the application to use. Replace it with what your application uses"
+      }
+    },
+    "loadBalancedEUPort1": {
+      "type": "int",
+      "defaultValue": 8080,
+      "metadata": {
+        "description": "Input endpoint2 for the application to use. Replace it with what your application uses"
+      }
+    },
+    "loadBalancedDHPort1": {
+      "type": "int",
+      "defaultValue": 8090,
       "metadata": {
         "description": "Input endpoint2 for the application to use. Replace it with what your application uses"
       }
@@ -120,7 +152,8 @@
       "type": "string",
       "defaultValue": "Temp",
       "allowedValues": [
-        "OS", "Temp"
+        "OS",
+        "Temp"
       ],
       "metadata": {
         "description": "The drive to use to store data on a cluster node."
@@ -128,40 +161,68 @@
     },
     "nodeTypeSize": {
       "type": "string",
-      "defaultValue": "Standard_D2_v2",
+      "defaultValue": "Standard_DS2_v3",
       "metadata": {
         "description": "The VM size to use for cluster nodes."
       }
+    },
+    "domainName": {
+      "type": "string",
+      "defaultValue": "QNXTCLOUD.COM",
+      "metadata": {
+        "description": "The Domain to Join"
+      }
+    },
+    "domainJoinPassword": {
+      "type": "string",
+      "metadata": {
+        "description": "The Domain Join Password"
+      }
+    },
+    "domainAdmin": {
+      "type": "string",
+      "metadata": {
+        "description": "The Domain Admin Username"
+      }
+    },
+    "ouPath": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+       "description": "Specifies an organizational unit (OU) for the domain account. Enter the full distinguished name of the OU in quotation marks. Example: 'OU=testOU; DC=domain; DC=Domain; DC=com"
+      }      
     }
   },
   "variables": {
-    "dnsName": "[parameters('clusterName')]",
-    "vmName": "vm",
-    "virtualNetworkName": "VNet",
     "addressPrefix": "10.0.0.0/16",
-    "nicName": "NIC",
-    "lbIPName": "PublicIP-LB-FE",
-    "overProvision": false,
-    "nt0applicationStartPort": "20000",
-    "nt0applicationEndPort": "30000",
-    "nt0ephemeralStartPort": "49152",
-    "nt0ephemeralEndPort": "65534",
-    "nt0fabricTcpGatewayPort": "19000",
-    "nt0fabricHttpGatewayPort": "19080",
-    "subnet0Name": "Subnet-0",
-    "subnet0Prefix": "10.0.0.0/24",
-    "subnet0Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('virtualNetworkName'), variables('subnet0Name'))]",
-    "supportLogStorageAccountName": "[concat( uniqueString(resourceGroup().id),'2')]",
     "applicationDiagnosticsStorageAccountName": "[concat(uniqueString(resourceGroup().id), '3' )]",
-    "lbName": "[concat('LB','-', parameters('clusterName'),'-',variables('vmNodeType0Name'))]",
+    "dnsName": "[parameters('clusterName')]",
+    "domainAndUsername": "[concat(parameters('domainAdmin'),'@',parameters('domainName'))]",
+    "lbHttpProbeID0": "[concat(variables('lbID0'),'/probes/FabricHttpGatewayProbe')]",
     "lbID0": "[resourceId('Microsoft.Network/loadBalancers',concat('LB','-', parameters('clusterName'),'-',variables('vmNodeType0Name')))]",
     "lbIPConfig0": "[concat(variables('lbID0'),'/frontendIPConfigurations/LoadBalancerIPConfig')]",
+    "lbIPName": "PublicIP-LB-FE",
+    "lbName": "[concat('LB','-', parameters('clusterName'),'-',variables('vmNodeType0Name'))]",
+    "lbNatPoolID0": "[concat(variables('lbID0'),'/inboundNatPools/LoadBalancerBEAddressNatPool')]",
     "lbPoolID0": "[concat(variables('lbID0'),'/backendAddressPools/LoadBalancerBEAddressPool')]",
     "lbProbeID0": "[concat(variables('lbID0'),'/probes/FabricGatewayProbe')]",
-    "lbHttpProbeID0": "[concat(variables('lbID0'),'/probes/FabricHttpGatewayProbe')]",
-    "lbNatPoolID0": "[concat(variables('lbID0'),'/inboundNatPools/LoadBalancerBEAddressNatPool')]",
+    "nicName": "NIC",
+    "nt0applicationEndPort": "30000",
+    "nt0applicationStartPort": "20000",
+    "nt0ephemeralEndPort": "65534",
+    "nt0ephemeralStartPort": "49152",
+    "nt0fabricHttpGatewayPort": "19080",
+    "nt0fabricTcpGatewayPort": "19000",
+    "overProvision": false,
+    "subnet0Name": "Subnet-0",
+    "subnet0Prefix": "10.0.10.0/24",
+    "subnet0Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('virtualNetworkName'), variables('subnet0Name'))]",
+    "supportLogStorageAccountName": "[concat( uniqueString(resourceGroup().id),'2')]",
+    "virtualNetworkName": "[parameters('virtualNetworkName')]",
+    "vmName": "vm",
     "vmNodeType0Name": "[toLower(concat('NT1', variables('vmName')))]",
-    "vmNodeType0Size": "[parameters('nodeTypeSize')]"
+    "vmNodeType0Size": "[parameters('nodeTypeSize')]",
+    "domainJoinOptions": 3
   },
   "resources": [
     {
@@ -338,6 +399,63 @@
               },
               "protocol": "Tcp"
             }
+          },
+          {
+            "name": "EUPortLBRule1",
+            "properties": {
+              "backendAddressPool": {
+                "id": "[variables('lbPoolID0')]"
+              },
+              "backendPort": "[parameters('loadBalancedEUPort1')]",
+              "enableFloatingIP": false,
+              "frontendIPConfiguration": {
+                "id": "[variables('lbIPConfig0')]"
+              },
+              "frontendPort": "[parameters('loadBalancedEUPort1')]",
+              "idleTimeoutInMinutes": 5,
+              "probe": {
+                "id": "[concat(variables('lbID0'),'/probes/EUPortProbe1')]"
+              },
+              "protocol": "Tcp"
+            }
+          },
+          {
+            "name": "EUPortLBRule1",
+            "properties": {
+              "backendAddressPool": {
+                "id": "[variables('lbPoolID0')]"
+              },
+              "backendPort": "[parameters('loadBalancedDHPort1')]",
+              "enableFloatingIP": false,
+              "frontendIPConfiguration": {
+                "id": "[variables('lbIPConfig0')]"
+              },
+              "frontendPort": "[parameters('loadBalancedDHPort1')]",
+              "idleTimeoutInMinutes": 5,
+              "probe": {
+                "id": "[concat(variables('lbID0'),'/probes/DHPortProbe1')]"
+              },
+              "protocol": "Tcp"
+            }
+          },
+          {
+            "name": "EUPortLBRule1",
+            "properties": {
+              "backendAddressPool": {
+                "id": "[variables('lbPoolID0')]"
+              },
+              "backendPort": "[parameters('loadBalancedEUPort1')]",
+              "enableFloatingIP": false,
+              "frontendIPConfiguration": {
+                "id": "[variables('lbIPConfig0')]"
+              },
+              "frontendPort": "[parameters('loadBalancedEUPort1')]",
+              "idleTimeoutInMinutes": 5,
+              "probe": {
+                "id": "[concat(variables('lbID0'),'/probes/EUPortProbe1')]"
+              },
+              "protocol": "Tcp"
+            }
           }
         ],
         "probes": [
@@ -374,6 +492,24 @@
               "intervalInSeconds": 5,
               "numberOfProbes": 2,
               "port": "[parameters('loadBalancedAppPort2')]",
+              "protocol": "Tcp"
+            }
+          },
+          {
+            "name": "EUPortProbe1",
+            "properties": {
+              "intervalInSeconds": 5,
+              "numberOfProbes": 2,
+              "port": "[parameters('loadBalancedEUPort1')]",
+              "protocol": "Tcp"
+            }
+          },
+          {
+            "name": "DHPortProbe1",
+            "properties": {
+              "intervalInSeconds": 5,
+              "numberOfProbes": 2,
+              "port": "[parameters('loadBalancedDHPort1')]",
               "protocol": "Tcp"
             }
           }
@@ -492,8 +628,28 @@
                   },
                   "typeHandlerVersion": "1.5"
                 }
+              },
+              {
+                "name": "joindomain",
+                "properties": {
+                  "publisher": "Microsoft.Compute",
+                  "type": "JsonADDomainExtension",
+                  "typeHandlerVersion": "1.3",
+                  "settings": {
+                    "Name": "[parameters('domainName')]",
+                    "OUPath": "[parameters('ouPath')]",
+                    "User": "[variables('domainAndUsername')]",
+                    "Restart": "true",
+                    "Options": "[variables('domainJoinOptions')]"
+                  },
+                  "protectedsettings": {
+                    "Password": "[parameters('domainJoinPassword')]"
+                  }
+                }
               }
+
             ]
+            
           },
           "networkProfile": {
             "networkInterfaceConfigurations": [
@@ -514,8 +670,10 @@
                             "id": "[variables('lbNatPoolID0')]"
                           }
                         ],
-                        "subnet": {
-                          "id": "[variables('subnet0Ref')]"
+                        "subnet": {                          
+                          "id": "[resourceId(parameters('existingVnetResourceGroupName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('existingSubNetName'))]"
+
+
                         }
                       }
                     }

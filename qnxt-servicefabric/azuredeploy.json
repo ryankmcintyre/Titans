@@ -1,68 +1,74 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-        "clusterOS": {
-            "type": "string",
-            "allowedValues": [
-                "Windows",
-                "Linux"
-            ],
-            "defaultValue": "Windows",
-            "metadata": {
-                "description": "Select the cluster OS."
-            }
-        },
-        "adminUsername": {
-            "type": "string",
-            "minLength": 1,
-            "metadata": {
-                "description": "Remote desktop user Id"
-            }
-        },
-        "adminPassword": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Remote desktop user password. Must be a strong password"
-            }
-        },
-        "certificate": {
-            "type": "string",
-            "minLength": 1,
-            "metadata": {
-                "description": "Certificate as Base64 encoded string."
-            }
-        },
-        "certificatePassword": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Certificate password for installation."
-            }
-        },
-        "certificateThumbprint": {
-            "type": "string",
-            "minLength": 1,
-            "metadata": {
-                "description": "Certificate thumbprint for identification in the local certificate store."
-            }
-        },
-        "appPort1": {
-            "type": "int",
-            "defaultValue": 80,
-            "minValue": 1,
-            "metadata": {
-                "description": "Public accessible application port #1."
-            }
-        },
-        "appPort2": {
-            "type": "int",
-            "defaultValue": 443,
-            "minValue": 1,
-            "metadata": {
-                "description": "Public accessible application port #2."
-            }
-        }
+  "parameters": {
+    "clusterOS": {
+      "type": "string",
+      "allowedValues": [
+        "Windows",
+        "Linux"
+      ],
+      "defaultValue": "Windows",
+      "metadata": {
+        "description": "Select the cluster OS."
+      }
     },
+    "adminUsername": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "Remote desktop user Id"
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Remote desktop user password. Must be a strong password"
+      }
+    },
+    "existingVnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "vName of the existing virtual network to deploy the scale set into."
+      }
+    },
+    "certificate": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "Certificate as Base64 encoded string."
+      }
+    },
+    "certificatePassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Certificate password for installation."
+      }
+    },
+    "certificateThumbprint": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "Certificate thumbprint for identification in the local certificate store."
+      }
+    },
+    "appPort1": {
+      "type": "int",
+      "defaultValue": 80,
+      "minValue": 1,
+      "metadata": {
+        "description": "Public accessible application port #1."
+      }
+    },
+    "appPort2": {
+      "type": "int",
+      "defaultValue": 443,
+      "minValue": 1,
+      "metadata": {
+        "description": "Public accessible application port #2."
+      }
+    }
+  },
   "variables": {
     "quickstartRepoRoot": "https://raw.githubusercontent.com/ryankmcintyre/Titans/master/",
     "clusterName": "[concat('sf-', toLower(uniqueString(resourceGroup().name)))]",
