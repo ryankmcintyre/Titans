@@ -69,13 +69,6 @@
         "metadata": {
          "description": "Specifies an organizational unit (OU) for the domain account. Enter the full distinguished name of the OU in quotation marks. Example: 'OU=testOU; DC=domain; DC=Domain; DC=com"
         }      
-      },
-
-    "existingVnetName": {
-      "type": "string",
-      "metadata": {
-        "description": "vName of the existing virtual network to deploy the scale set into."
-      }
     },
     "certificate": {
       "type": "string",
@@ -198,9 +191,6 @@
                     "ouPath": {
                         "value": "[parameters('ouPath')]"
                     },
-                    "existingVnetName": {
-                        "value": "[parameters('existingVnetName')]"
-                    },
                     "vmImagePublisher": {
                         "value": "MicrosoftWindowsServer"
                     },
@@ -282,10 +272,6 @@
                     "ouPath": {
                         "value": "[parameters('ouPath')]"
                     },
-                    "existingVnetName": {
-                        "value": "[parameters('existingVnetName')]"
-                    },
-
                     "vmImagePublisher": {
                         "value": "Microsoft.Azure.ServiceFabric"
                     },
