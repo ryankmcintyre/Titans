@@ -216,7 +216,6 @@
     "overProvision": false,
     "subnet0Name": "Subnet-0",
     "subnet0Prefix": "10.0.10.0/24",
-    "subnet0Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('virtualNetworkName'), variables('subnet0Name'))]",
     "supportLogStorageAccountName": "[concat( uniqueString(resourceGroup().id),'2')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "vmName": "vm",

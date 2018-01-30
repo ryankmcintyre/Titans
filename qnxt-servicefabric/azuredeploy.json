@@ -105,6 +105,22 @@
       "metadata": {
         "description": "Public accessible application port #2."
       }
+    },
+    "euPort1":{
+        "type": "int",
+        "defaultValue": 8080,
+        "minValue": 1,
+        "metadata": {
+            "description": "Public accessible application port #2."
+        }    
+    },
+    "dhPort1":{
+        "type": "int",
+        "defaultValue": 8090,
+        "minValue": 1,
+        "metadata": {
+            "description": "Public accessible application port #2."
+        }    
     }
   },
   "variables": {
@@ -114,6 +130,8 @@
     "vaultSecret": "ClusterCertificate",
     "loadBalancedAppPort1": "[parameters('appPort1')]",
     "loadBalancedAppPort2": "[parameters('appPort2')]",
+    "loadBalancedEUPort1": "[parameters('euPort1')]",
+    "loadBalancedDHPort1": "[parameters('dhPort1')]",
     "nt0InstanceCount": 5
   },
     "resources": [
@@ -209,6 +227,12 @@
                     "loadBalancedAppPort2": {
                         "value": "[variables('loadBalancedAppPort2')]"
                     },
+                    "loadBalancedEUPort1":{
+                        "value": "[variables('loadBalancedEUPort1')]"
+                    },
+                    "loadBalancedDHPort1":{
+                        "value": "[variables('loadBalancedDHPort1')]"
+                    },
                     "certificateThumbprint": {
                         "value": "[parameters('certificateThumbprint')]"
                     },
@@ -289,6 +313,12 @@
                     },
                     "loadBalancedAppPort2": {
                         "value": "[variables('loadBalancedAppPort2')]"
+                    },
+                    "loadBalancedEUPort1":{
+                        "value": "[variables('loadBalancedEUPort1')]"
+                    },
+                    "loadBalancedDHPort1":{
+                        "value": "[variables('loadBalancedDHPort1')]"
                     },
                     "certificateThumbprint": {
                         "value": "[parameters('certificateThumbprint')]"
