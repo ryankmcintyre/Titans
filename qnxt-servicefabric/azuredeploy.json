@@ -90,7 +90,7 @@
         "description": "Certificate thumbprint for identification in the local certificate store."
       }
     },
-    "appPort1": {
+    "loadBalancedAppPort1": {
       "type": "int",
       "defaultValue": 80,
       "minValue": 1,
@@ -98,7 +98,7 @@
         "description": "Public accessible application port #1."
       }
     },
-    "appPort2": {
+    "loadBalancedAppPort2": {
       "type": "int",
       "defaultValue": 443,
       "minValue": 1,
@@ -106,7 +106,7 @@
         "description": "Public accessible application port #2."
       }
     },
-    "euPort1":{
+    "loadBalancedEUPort1":{
         "type": "int",
         "defaultValue": 8080,
         "minValue": 1,
@@ -114,7 +114,7 @@
             "description": "Public accessible application port #2."
         }    
     },
-    "dhPort1":{
+    "loadBalancedDHPort1":{
         "type": "int",
         "defaultValue": 8090,
         "minValue": 1,
@@ -128,10 +128,6 @@
     "clusterName": "[concat('sf-', toLower(uniqueString(resourceGroup().name)))]",
     "vaultName": "[concat('kv-', toLower(uniqueString(resourceGroup().name)))]",
     "vaultSecret": "ClusterCertificate",
-    "loadBalancedAppPort1": "[parameters('appPort1')]",
-    "loadBalancedAppPort2": "[parameters('appPort2')]",
-    "loadBalancedEUPort1": "[parameters('euPort1')]",
-    "loadBalancedDHPort1": "[parameters('dhPort1')]",
     "nt0InstanceCount": 5
   },
     "resources": [
@@ -209,29 +205,17 @@
                     "ouPath": {
                         "value": "[parameters('ouPath')]"
                     },
-                    "vmImagePublisher": {
-                        "value": "MicrosoftWindowsServer"
-                    },
-                    "vmImageOffer": {
-                        "value": "WindowsServer"
-                    },
-                    "vmImageSku": {
-                        "value": "2016-Datacenter-with-Containers"
-                    },
-                    "vmImageVersion": {
-                        "value": "latest"
-                    },
                     "loadBalancedAppPort1": {
-                        "value": "[variables('loadBalancedAppPort1')]"
+                        "value": "[parameters('loadBalancedAppPort1')]"
                     },
                     "loadBalancedAppPort2": {
-                        "value": "[variables('loadBalancedAppPort2')]"
+                        "value": "[parameters('loadBalancedAppPort2')]"
                     },
                     "loadBalancedEUPort1":{
-                        "value": "[variables('loadBalancedEUPort1')]"
+                        "value": "[parameters('loadBalancedEUPort1')]"
                     },
                     "loadBalancedDHPort1":{
-                        "value": "[variables('loadBalancedDHPort1')]"
+                        "value": "[parameters('loadBalancedDHPort1')]"
                     },
                     "certificateThumbprint": {
                         "value": "[parameters('certificateThumbprint')]"
@@ -241,12 +225,6 @@
                     },
                     "certificateUrlValue": {
                         "value": "[reference(resourceId('Microsoft.KeyVault/vaults/secrets', variables('vaultName'), variables('vaultSecret'))).secretUriWithVersion]"
-                    },
-                    "nt0InstanceCount": {
-                        "value": "[variables('nt0InstanceCount')]"
-                    },
-                    "nodeDataDrive": {
-                        "value": "OS"
                     }
                 }
             }
@@ -296,9 +274,6 @@
                     "ouPath": {
                         "value": "[parameters('ouPath')]"
                     },
-                    "vmImagePublisher": {
-                        "value": "Microsoft.Azure.ServiceFabric"
-                    },
                     "vmImageOffer": {
                         "value": "UbuntuServer"
                     },
@@ -309,16 +284,16 @@
                         "value": "6.0.11"
                     },
                     "loadBalancedAppPort1": {
-                        "value": "[variables('loadBalancedAppPort1')]"
+                        "value": "[parameters('loadBalancedAppPort1')]"
                     },
                     "loadBalancedAppPort2": {
-                        "value": "[variables('loadBalancedAppPort2')]"
+                        "value": "[parameters('loadBalancedAppPort2')]"
                     },
                     "loadBalancedEUPort1":{
-                        "value": "[variables('loadBalancedEUPort1')]"
+                        "value": "[parameters('loadBalancedEUPort1')]"
                     },
                     "loadBalancedDHPort1":{
-                        "value": "[variables('loadBalancedDHPort1')]"
+                        "value": "[parameters('loadBalancedDHPort1')]"
                     },
                     "certificateThumbprint": {
                         "value": "[parameters('certificateThumbprint')]"
