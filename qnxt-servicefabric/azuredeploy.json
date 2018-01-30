@@ -13,6 +13,24 @@
         "description": "Select the cluster OS."
       }
     },
+    "virtualNetworkName": {
+        "type": "string",
+        "metadata": {
+          "description": "Name of existing virtual network to use. Letters and numbers only"
+        }
+      },
+      "existingVnetResourceGroupName": {
+        "type": "string",
+        "metadata": {
+          "description": "Name of the resourceGroup for the existing virtual network to deploy the scale set into."
+        }
+      },
+      "existingSubnetName": {
+        "type": "string",
+        "metadata": {
+          "description": "Name of the existing subnet to deploy the scale set into."
+        }
+      },    
     "adminUsername": {
       "type": "string",
       "minLength": 1,
@@ -26,6 +44,33 @@
         "description": "Remote desktop user password. Must be a strong password"
       }
     },
+    "domainName": {
+        "type": "string",
+        "defaultValue": "QNXTCLOUD.COM",
+        "metadata": {
+          "description": "The Domain to Join"
+        }
+      },
+      "domainJoinPassword": {
+        "type": "string",
+        "metadata": {
+          "description": "The Domain Join Password"
+        }
+      },
+      "domainAdmin": {
+        "type": "string",
+        "metadata": {
+          "description": "The Domain Admin Username"
+        }
+      },
+      "ouPath": {
+        "type": "string",
+        "defaultValue": "",
+        "metadata": {
+         "description": "Specifies an organizational unit (OU) for the domain account. Enter the full distinguished name of the OU in quotation marks. Example: 'OU=testOU; DC=domain; DC=Domain; DC=com"
+        }      
+      },
+
     "existingVnetName": {
       "type": "string",
       "metadata": {
@@ -192,6 +237,31 @@
                     "adminPassword": {
                         "value": "[parameters('adminPassword')]"
                     },
+                    "existingVnetResourceGroupName": {
+                        "value": "[parameters('existingVnetResourceGroupName')]"
+                    },
+                    "existingSubnetName": {
+                        "value": "[parameters('existingSubnetName')]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[parameters('virtualNetworkName')]"
+                    },
+                    "domainJoinPassword": {
+                        "value": "[parameters('domainJoinPassword')]"
+                    },
+                    "domainAdmin": {
+                        "value": "[parameters('domainAdmin')]"
+                    },
+                    "domainName": {
+                        "value": "[parameters('domainName')]"
+                    },
+                    "ouPath": {
+                        "value": "[parameters('ouPath')]"
+                    },
+                    "existingVnetName": {
+                        "value": "[parameters('existingVnetName')]"
+                    },
+
                     "vmImagePublisher": {
                         "value": "Microsoft.Azure.ServiceFabric"
                     },
