@@ -177,6 +177,30 @@
                     "adminPassword": {
                         "value": "[parameters('adminPassword')]"
                     },
+                    "existingVnetResourceGroupName": {
+                        "value": "[parameters('existingVnetResourceGroupName')]"
+                    },
+                    "existingSubnetName": {
+                        "value": "[parameters('existingSubnetName')]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[parameters('virtualNetworkName')]"
+                    },
+                    "domainJoinPassword": {
+                        "value": "[parameters('domainJoinPassword')]"
+                    },
+                    "domainAdmin": {
+                        "value": "[parameters('domainAdmin')]"
+                    },
+                    "domainName": {
+                        "value": "[parameters('domainName')]"
+                    },
+                    "ouPath": {
+                        "value": "[parameters('ouPath')]"
+                    },
+                    "existingVnetName": {
+                        "value": "[parameters('existingVnetName')]"
+                    },
                     "vmImagePublisher": {
                         "value": "MicrosoftWindowsServer"
                     },
