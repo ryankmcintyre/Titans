@@ -11,6 +11,7 @@
     },
     "clusterName": {
       "type": "string",
+      "defaultValue": "[concat('sf-', toLower(uniqueString(resourceGroup().name)))]",
       "metadata": {
         "description": "Name of your cluster - Between 3 and 23 characters. Letters and numbers only"
       }
@@ -119,12 +120,14 @@
     },
     "sourceVaultResourceId": {
       "type": "string",
+      "defaultValue": "[resourceId('Microsoft.KeyVault/vaults', concat('kv-', toLower(uniqueString(resourceGroup().name))))]",
       "metadata": {
         "description": "Resource Id of the key vault, is should be in the format of /subscriptions/<Sub ID>/resourceGroups/<Resource group name>/providers/Microsoft.KeyVault/vaults/<vault name>"
       }
     },
     "certificateUrlValue": {
       "type": "string",
+      "defaultValue": "[reference(resourceId('Microsoft.KeyVault/vaults/secrets', concat('kv-', toLower(uniqueString(resourceGroup().name))), 'ClusterCertificate').secretUriWithVersion]",
       "metadata": {
         "description": "Refers to the location URL in your key vault where the certificate was uploaded, it is should be in the format of https://<name of the vault>.vault.azure.net:443/secrets/<exact location>"
       }
