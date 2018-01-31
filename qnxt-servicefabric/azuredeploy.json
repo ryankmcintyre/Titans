@@ -80,6 +80,7 @@
     },
     "certificatePassword": {
       "type": "securestring",
+      "defaultValue": "pass@word1",
       "metadata": {
         "description": "Certificate password for installation."
       }
@@ -87,6 +88,7 @@
     "certificateThumbprint": {
       "type": "string",
       "minLength": 1,
+      "defaultValue": "7B668EE2E3B8B354B8EB0149BBF3BA16DE246AB9",
       "metadata": {
         "description": "Certificate thumbprint for identification in the local certificate store."
       }
