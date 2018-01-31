@@ -258,31 +258,6 @@
     },
     {
       "apiVersion": "2017-09-01",
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[variables('virtualNetworkName')]",
-      "location": "[parameters('location')]",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[variables('addressPrefix')]"
-          ]
-        },
-        "subnets": [
-          {
-            "name": "[variables('subnet0Name')]",
-            "properties": {
-              "addressPrefix": "[variables('subnet0Prefix')]"
-            }
-          }
-        ]
-      },
-      "tags": {
-        "resourceType": "Service Fabric",
-        "clusterName": "[parameters('clusterName')]"
-      }
-    },
-    {
-      "apiVersion": "2017-09-01",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('lbIPName')]",
       "location": "[parameters('location')]",
