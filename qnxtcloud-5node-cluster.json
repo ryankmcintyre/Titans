@@ -194,7 +194,6 @@
     }
   },
   "variables": {
-    "addressPrefix": "10.0.0.0/16",
     "applicationDiagnosticsStorageAccountName": "[concat(uniqueString(resourceGroup().id), '3' )]",
     "dnsName": "[parameters('clusterName')]",
     "domainAndUsername": "[concat(parameters('domainAdmin'),'@',parameters('domainName'))]",
@@ -214,10 +213,8 @@
     "nt0fabricHttpGatewayPort": "19080",
     "nt0fabricTcpGatewayPort": "19000",
     "overProvision": false,
-    "subnet0Name": "Subnet-0",
     "subnet0Prefix": "10.0.10.0/24",
     "supportLogStorageAccountName": "[concat( uniqueString(resourceGroup().id),'2')]",
-    "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "vmName": "vm",
     "vmNodeType0Name": "[toLower(concat('NT1', variables('vmName')))]",
     "vmNodeType0Size": "[parameters('nodeTypeSize')]",
@@ -495,7 +492,7 @@
       "name": "[variables('vmNodeType0Name')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[variables('virtualNetworkName')]",        
+        "[parameters('virtualNetworkName')]",        
         "[variables('lbName')]",
         "[variables('supportLogStorageAccountName')]",
         "[variables('applicationDiagnosticsStorageAccountName')]"
