@@ -31,6 +31,13 @@
           "description": "Name of the existing subnet to deploy the scale set into."
         }
       },    
+      "subnetPrefix": {
+        "type": "string",
+        "defaultValue": "10.0.2.0/24",
+        "metadata": {
+          "description": "Subnet prefix for VMSS to connect to Service Fabric, e.g. 10.0.0.0/24"
+        }
+      },
     "adminUsername": {
       "type": "string",
       "minLength": 1,
@@ -196,6 +203,9 @@
                     },
                     "virtualNetworkName": {
                         "value": "[parameters('virtualNetworkName')]"
+                    },
+                    "subnetPrefix": {
+                        "value": "[parameters('subnetPrefix')]"
                     },
                     "domainJoinPassword": {
                         "value": "[parameters('domainJoinPassword')]"

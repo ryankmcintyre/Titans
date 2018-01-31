@@ -33,6 +33,13 @@
         "description": "Name of the existing subnet to deploy the scale set into."
       }
     },
+    "subnetPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.2.0/24",
+      "metadata": {
+        "description": "Subnet prefix for VMSS to connect to Service Fabric, e.g. 10.0.0.0/24"
+      }
+    },
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -213,7 +220,7 @@
     "nt0fabricHttpGatewayPort": "19080",
     "nt0fabricTcpGatewayPort": "19000",
     "overProvision": false,
-    "subnet0Prefix": "10.0.10.0/24",
+    "subnet0Prefix": "[parameters('subnetPrefix')]",
     "supportLogStorageAccountName": "[concat( uniqueString(resourceGroup().id),'2')]",
     "vmName": "vm",
     "vmNodeType0Name": "[toLower(concat('NT1', variables('vmName')))]",
