@@ -422,7 +422,7 @@
             }
           },
           {
-            "name": "EUPortLBRule1",
+            "name": "DHPortLBRule1",
             "properties": {
               "backendAddressPool": {
                 "id": "[variables('lbPoolID0')]"
