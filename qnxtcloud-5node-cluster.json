@@ -492,7 +492,6 @@
       "name": "[variables('vmNodeType0Name')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[parameters('virtualNetworkName')]",        
         "[variables('lbName')]",
         "[variables('supportLogStorageAccountName')]",
         "[variables('applicationDiagnosticsStorageAccountName')]"
