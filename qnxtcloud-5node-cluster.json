@@ -720,6 +720,9 @@
             "name": "Security"
           }
         ],
+        "addonFeatures": [
+          "DnsService"
+        ],
         "managementEndpoint": "[concat('https://',reference(variables('lbIPName')).dnsSettings.fqdn,':',variables('nt0fabricHttpGatewayPort'))]",
         "nodeTypes": [
           {
